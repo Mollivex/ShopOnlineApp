@@ -11,5 +11,6 @@ namespace ShopOnline.Web.Services.Contracts
 
         event Action<int> OnShoppingCartChanged;
         void RaiseEventOnShoppingCartChanged(int totalQty);
+
     }
 }

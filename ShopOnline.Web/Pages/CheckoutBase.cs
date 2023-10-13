@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ShopOnline.Models.Dtos;
 using ShopOnline.Web.Services.Contracts;
 
 namespace ShopOnline.Web.Pages
 {
-    public class CheckoutBase : ComponentBase
+    public class CheckoutBase:ComponentBase
     {
         [Inject]
         public IJSRuntime Js { get; set; }
@@ -21,13 +23,15 @@ namespace ShopOnline.Web.Pages
         [Inject]
         public IShoppingCartService ShoppingCartService { get; set; }
 
+        protected string DisplayButtons { get; set; } = "block";
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 ShoppingCartItems = await ShoppingCartService.GetItems(HardCoded.UserId);
 
-                if (ShoppingCartItems != null)
+                if (ShoppingCartItems != null && ShoppingCartItems.Count() > 0)
                 {
                     Guid orderGuid = Guid.NewGuid();
 
@@ -35,6 +39,10 @@ namespace ShopOnline.Web.Pages
                     TotalQty = ShoppingCartItems.Sum(p => p.Qty);
                     PaymentDescription = $"O_{HardCoded.UserId}_{orderGuid}";
 
+                }
+                else
+                {
+                    DisplayButtons = "none";
                 }
 
             }
@@ -60,5 +68,7 @@ namespace ShopOnline.Web.Pages
                 throw;
             }
         }
+
+
     }
 }
