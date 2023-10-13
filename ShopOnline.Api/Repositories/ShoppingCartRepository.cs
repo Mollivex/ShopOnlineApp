@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using ShopOnline.Api.Data;
 using ShopOnline.Api.Entities;
-using ShopOnline.Api.Services.Contracts;
+using ShopOnline.Api.Repositories.Contracts;
 using ShopOnline.Models.Dtos;
 
 namespace ShopOnline.Api.Repositories
@@ -17,11 +18,13 @@ namespace ShopOnline.Api.Repositories
 
         private async Task<bool> CartItemExists(int cartId, int productId)
         {
-            return await this.shopOnlineDbContext.CartItems.AnyAsync(c => c.CartId == cartId && c.ProductId == productId);
+            return await this.shopOnlineDbContext.CartItems.AnyAsync(c => c.CartId == cartId &&
+                                                                     c.ProductId == productId);
+
         }
         public async Task<CartItem> AddItem(CartItemToAddDto cartItemToAddDto)
         {
-            if(await CartItemExists(cartItemToAddDto.CartId, cartItemToAddDto.ProductId) == false)
+            if (await CartItemExists(cartItemToAddDto.CartId, cartItemToAddDto.ProductId) == false)
             {
                 var item = await (from product in this.shopOnlineDbContext.Products
                                   where product.Id == cartItemToAddDto.ProductId
@@ -31,6 +34,7 @@ namespace ShopOnline.Api.Repositories
                                       ProductId = product.Id,
                                       Qty = cartItemToAddDto.Qty
                                   }).SingleOrDefaultAsync();
+
                 if (item != null)
                 {
                     var result = await this.shopOnlineDbContext.CartItems.AddAsync(item);
@@ -40,6 +44,7 @@ namespace ShopOnline.Api.Repositories
             }
 
             return null;
+
         }
 
         public async Task<CartItem> DeleteItem(int id)
@@ -51,8 +56,9 @@ namespace ShopOnline.Api.Repositories
                 this.shopOnlineDbContext.CartItems.Remove(item);
                 await this.shopOnlineDbContext.SaveChangesAsync();
             }
-
+            
             return item;
+
         }
 
         public async Task<CartItem> GetItem(int id)

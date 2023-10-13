@@ -4,7 +4,7 @@ using ShopOnline.Web.Services.Contracts;
 
 namespace ShopOnline.Web.Pages
 {
-    public class ProductDetailsBase : ComponentBase
+    public class ProductDetailsBase:ComponentBase
     {
         [Parameter]
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace ShopOnline.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         public ProductDto Product { get; set; }
-        
+
         public string ErrorMessage { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -38,14 +38,15 @@ namespace ShopOnline.Web.Pages
         {
             try
             {
-                var  cartItemDto = await ShoppingCartService.AddItem(cartItemToAddDto);
+               var cartItemDto = await ShoppingCartService.AddItem(cartItemToAddDto);
                 NavigationManager.NavigateTo("/ShoppingCart");
             }
             catch (Exception)
             {
-                // Log exception
-                throw;
+
+                //Log Exception
             }
         }
+
     }
 }

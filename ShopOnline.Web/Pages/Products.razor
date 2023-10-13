@@ -1,9 +1,14 @@
 ﻿@page "/"
 @inherits ProductsBase
 
-@if(Products == null)
+@if(Products == null && ErrorMessage == null)
 {
     <DisplaySpinner/>
+
+}
+else if(ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
 }
 else
 {
