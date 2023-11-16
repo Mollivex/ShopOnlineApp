@@ -1,5 +1,9 @@
 # ShopOnlineSolution
 
+Swagger API
+
+![SwaggerAPI](https://github.com/Mollivex/ShopOnlineApp/assets/108339772/e708b05e-bba2-4153-b8f0-f30c79074122)
+
 Homepage ShopOnline
 
 ![image](https://github.com/Mollivex/ShopOnlineApp/assets/108339772/e176a899-bef9-4f15-b2fb-654901829aa3)
